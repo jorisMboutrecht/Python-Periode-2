@@ -9,6 +9,7 @@ shop_item = [
 ]
 c= 0
 
+print(f"Hallo {player_name} je hebt {player_gold} gold")
 
 def shop():
     print("=== Fantasy Item Shop ===")
@@ -17,7 +18,8 @@ def shop():
         c = i+1
         print(f"{i+1}. Buy {shop_item2[0]} ({shop_item2[1]} gold)")
     print(f"{c+1}. View Inventory")
-    print(f"{c+2}. Exit Shop")
+    print(f"{c+2}. Verkoop items")
+    print(f"{c+3}. Exit Shop")
     a = int(input("maak een keuze: "))
     keuze(a)
 def keuze(k):
@@ -27,20 +29,30 @@ def keuze(k):
         case 1:
             shop_item2 = shop_item[k-1]
             if shop_item2[1] <= player_gold:
-                player_gold -= shop_item2[1]
-                print(f"je hebt {shop_item2[0]} gekocht voor {shop_item2[1]}")
-                print(f"je hebt nog {player_gold} over")
-                shop()
+                if shop_item2[0] in inventory:
+                    print(f"Je hebt {shop_item2[0]} al")
+                    shop()
+                else:
+                    player_gold -= shop_item2[1]
+                    print(f"je hebt {shop_item2[0]} gekocht voor {shop_item2[1]}")
+                    print(f"je hebt nog {player_gold} over")
+                    inventory.append(shop_item2[0])
+                    shop()
             else:
                 print(f"je komt {shop_item2[1] - player_gold} gold te kort voor {shop_item2[0]}")
                 shop()
         case 2:
             shop_item2 = shop_item[k-1]
             if shop_item2[1] <= player_gold:
-                player_gold -= shop_item2[1]
-                print(f"je hebt {shop_item2[0]} gekocht voor {shop_item2[1]}")
-                print(f"je hebt nog {player_gold} over")
-                shop()
+                if shop_item2[0] in inventory:
+                    print(f"Je hebt {shop_item2[0]} al")
+                    shop()
+                else:
+                    player_gold -= shop_item2[1]
+                    print(f"je hebt {shop_item2[0]} gekocht voor {shop_item2[1]}")
+                    print(f"je hebt nog {player_gold} over")
+                    inventory.append(shop_item2[0])
+                    shop()
             else:
                 print(f"je komt {shop_item2[1] - player_gold} gold te kort voor {shop_item2[0]}")
                 shop()
@@ -50,6 +62,7 @@ def keuze(k):
                 player_gold -= shop_item2[1]
                 print(f"je hebt {shop_item2[0]} gekocht voor {shop_item2[1]}")
                 print(f"je hebt nog {player_gold} over")
+                inventory.append(shop_item2[0])
                 shop()
             else:
                 print(f"je komt {shop_item2[1] - player_gold} gold te kort voor {shop_item2[0]}")
@@ -57,17 +70,39 @@ def keuze(k):
         case 4:
             shop_item2 = shop_item[k-1]
             if shop_item2[1] <= player_gold:
-                player_gold -= shop_item2[1]
-                print(f"je hebt {shop_item2[0]} gekocht voor {shop_item2[1]}")
-                print(f"je hebt nog {player_gold} over")
-                shop()
+                if shop_item2[0] in inventory:
+                    print(f"Je hebt {shop_item2[0]} al")
+                    shop()
+                else:
+                    player_gold -= shop_item2[1]
+                    print(f"je hebt {shop_item2[0]} gekocht voor {shop_item2[1]}")
+                    print(f"je hebt nog {player_gold} over")
+                    inventory.append(shop_item2[0])
+                    shop()
             else:
                 print(f"je komt {shop_item2[1] - player_gold} gold te kort voor {shop_item2[0]}")
                 shop()
         case 5:
-            print(list(inventory))
+            print("Your inventory")
+            for i in inventory:
+                print(f"- {i}")
             shop()
         case 6:
-            return
-            
+            print("kies een item om te verkopen voor de helf van de waarde")
+            if len(inventory) == 0:
+                print("je hebt geen items om te verkopen")
+                shop()
+            for i in range(0, len(inventory)):
+                print(f"{i+1}. {inventory[i]} voor {shop_item}")
+        case 7:
+            exit()
+    print("geef een geldige invoer")
+    shop()
+
+
+
+def exit():
+    print(f"bedankt voor je bezoek, {player_name}!")
+    print(f"je hebt {player_gold} gold over ")
+    quit()
 shop()
